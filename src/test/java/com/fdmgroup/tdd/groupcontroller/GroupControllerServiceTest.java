@@ -1,20 +1,7 @@
 package com.fdmgroup.tdd.groupcontroller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 public class GroupControllerServiceTest {
 	
@@ -25,7 +12,30 @@ public class GroupControllerServiceTest {
 		IReader iread =  Mockito.mock(IReader.class);
 		GroupController gc = new GroupController(iread);
 		
+		gc.getAllTrainees();
+		
+		Mockito.verify(iread, Mockito.times(1)).readTrainee();
+			
+	}
+	@Test
+	public void test_DatabaseWriterObjectCalledFromGroupControllerToDeleteUserByUserName() {
+		IReader iread =  Mockito.mock(IReader.class);
+		GroupController gc = new GroupController(iread);
+		
+		String userName = "Bob";
+		gc.removeTraineeByUsername(userName);
+		
+		Mockito.verify(iread, Mockito.times(1)).deleteTrainee(userName);
+	}
+	@Test
+	public void test_DatabaseWriterObjectCalledFromGroupControllerToWriteATraineeToDB() {
+		IReader iread =  Mockito.mock(IReader.class);
+		GroupController gc = new GroupController(iread);
+		
+		Trainee t = Mockito.mock(Trainee.class);
+		gc.addTrainee(t);
+		
+		Mockito.verify(iread, Mockito.times(1)).addTrainee(t);
 		
 	}
-
 }

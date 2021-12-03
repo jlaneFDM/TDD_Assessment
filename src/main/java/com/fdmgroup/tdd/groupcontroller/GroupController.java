@@ -6,7 +6,7 @@ import java.util.Map;
 import org.mockito.Mockito;
 
 public class GroupController implements GroupControllerService {
-    IReader iread;
+    IReader iread; //I'd change this interface name. 
     DatabaseReader dbReader;
     DatabaseWriter dbWriter;
 	public GroupController(IReader iread) {
@@ -16,24 +16,23 @@ public class GroupController implements GroupControllerService {
 	public Map<String, Trainee> getAllTrainees() {
 		
 		this.dbReader = new DatabaseReader(iread);
-		Trainee t = Mockito.mock(Trainee.class);
-		Map<String, Trainee> m = new HashMap<String, Trainee>();
-		m.put("123", t);
-		dbReader.readGroup(m);
+		Map<String, Trainee> test = new HashMap<String,Trainee>();
+		dbReader.readGroup(test);
 		
 		return null;
 	}
 
 	@Override
 	public void addTrainee(Trainee trainee) {
-		
-		
+		this.dbWriter = new DatabaseWriter(iread);
+		dbWriter.addTrainee(trainee);
+				
 	}
 
 	@Override
 	public void removeTraineeByUsername(String traineeUsername) {
-		// TODO Auto-generated method stub
-		
+		this.dbWriter = new DatabaseWriter(iread);
+		dbWriter.deleteTraineeByUsername(traineeUsername);
 	}
 
 }

@@ -10,7 +10,7 @@ public class DatabaseReader {
 	}
 	
 	public Map<String, Trainee> readGroup(Map<String, Trainee> map) {
-		iread.readTrainee(map);
+		iread.readTrainee();
 		return null;
 	}
 }
